@@ -8,7 +8,7 @@ var {setDefaultTimeout} = require('cucumber');
 
 
 
-Given('Quiero ir a la pagina de trello', function () {
+Given('Quiero ir a la pagina de Trello', function () {
 
     setDefaultTimeout(60 * 1000);
     this.driver = new webdriver.Builder()
@@ -17,10 +17,20 @@ Given('Quiero ir a la pagina de trello', function () {
     this.driver.get('http://www.trello.com');
 });
 
-Then('verificar que estamos en la pagina de trello', async function () {
+Then('verificar que el titulo sea correcto', async function () {
     
     var titulo = await this.driver.getTitle();
-    var url = await this.driver.getCurrentUrl();
-    await assert( url === 'https://trello.com/', 'url actual: ' + url + 'La url esperada es: https://trello.com/' );
     await assert( titulo === 'Trello', 'Titulo actual: '+ titulo + ' Titulo esperado:Trello');
-});
+}); 
+
+
+When('inicio sesion en Trello con {} y contraseña {}' , async function(usuario, password){
+    var iniciarSesion = await this.driver.findElement(By.xpath('//*[.="Iniciar sesión"]'));
+    await iniciarSesion.click();
+    var email = await this.driver.findElement(By.xpath('//*[@id="user"]'));
+    await email.sendKeys(usuario);
+    var contraseña = await this.driver.findElement(By.xpath('//*[@id="password"]'));
+    await contraseña.sendKeys(password);
+    var entrar = await this.driver.findElement(By.xpath('//*[@id="login"]'));
+    await entrar.click();
+  });
