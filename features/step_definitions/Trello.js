@@ -22,7 +22,7 @@ Then('verificar que el titulo sea correcto', async function () {
     var titulo = await this.driver.getTitle();
     await assert( titulo === 'Trello', 'Titulo actual: '+ titulo + ' Titulo esperado:Trello');
 }); 
-
+ 
 
 When('inicio sesion en Trello con {} y contraseña {}' , async function(usuario, password){
     var iniciarSesion = await this.driver.findElement(By.xpath('//*[.="Iniciar sesión"]'));
